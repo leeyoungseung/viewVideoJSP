@@ -28,6 +28,8 @@ public class MemberController extends HttpServlet {
 		System.err.println(11);
 		String uri = request.getRequestURI();
 		String path = request.getContextPath();
+		System.out.println(uri);
+		System.out.println(path);
 		String cmd = uri.substring(path.length());
 		System.out.println("why? : "+cmd);
 		String nextPage=null;  

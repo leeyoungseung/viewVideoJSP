@@ -39,21 +39,28 @@ public class VideoDAO {
 			dto.setVidNo(rs.getInt("vidNo"));
 			dto.setMemNo(rs.getInt("memNo"));
 			dto.setVidAddr(rs.getString("vidAddr"));
-			dto.setVidDate(rs.getDate("vidDate"));
+			//dto.setVidDate(rs.getDate("vidDate"));
 			listMember.add(dto);
 		}
 		return listMember;
 	}
 	public List<VideoDTO> list(Integer memNo) throws Exception{
+		System.out.println("video list");
 		String sql = "select * from video where memNo="+memNo;
 		List<VideoDTO> vlist = null;
 		try{
+			System.out.println(1);
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
 			vlist = makeList(rs);
+			System.out.println(2);
+			for(VideoDTO dto :vlist) {
+				System.out.println(dto.getVidAddr());
+			}
 			return vlist;
 		}catch (Exception e) {
 			// TODO: handle exception
+			System.out.println("erorr");
 			return vlist;
 		}finally{
 			if (rs != null) rs.close();
@@ -64,8 +71,8 @@ public class VideoDAO {
 	//挿入
 	public String createOne(VideoDTO dto) throws Exception{
 		String result="register error";
-		String sql = "insert into video ( memNo, vidAddr, sysdate()) values ("
-				+ "'"+dto.getMemNo()+"', '"+dto.getVidAddr()+"')";
+		String sql = "insert into video ( memNo, vidAddr, vidDate) values ("
+				+ "'"+dto.getMemNo()+"', '"+dto.getVidAddr()+"', sysdate())";
 		try{
 			ps = con.prepareStatement(sql);
 			int res = ps.executeUpdate();

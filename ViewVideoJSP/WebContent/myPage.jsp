@@ -27,15 +27,9 @@
    <div class="collapsed nabvar-collapse" id="bs-example-navbar-collapse-1"><!-- 네비게이션바의 내용을 가로로 나열 할 수 있게 설정 -->
     <ul class="nav navbar-nav"><!-- 네비게이션바의 본문 -->
      <li class="active"><a href="#">소개<span class="sr-only"></span></a></li><!-- (3)두 번째 버튼으로 li태그의 active클래스 속성을 사용하여 선택되어져 있듯이 보이게함. -->
-     <li><a href="#">앨범</a></li><!-- (4)세번째 버튼 -->
-     <li class="dropdown"><!-- (5)dropdown클래스 속성을 이용하여 토글 버튼생성 -->
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-       aria-haspopup="true" aria-expanded="false">멤버<span class="caret"></span></a>
-      <ul class="dropdown-menu">
-       <li><a href="lecture.html?lectureName=momo">모모</a></li>
-       <li><a href="lecture.html?lectureName=sana">사나</a></li>
-       <li><a href="lecture.html?lectureName=mina">미나</a></li>
-      </ul>
+     <li><a href="list.video?memNo=${user.getMemNo() }">앨범</a></li><!-- (4)세번째 버튼 -->
+     <li class="active"><!-- (5)dropdown클래스 속성을 이용하여 토글 버튼생성 -->
+      <a href="join.jsp">新たな動画登録<span class="caret"></span></a>
      </li>
     </ul>
     <form class="navbar-form navbar-left"><!-- (6)네비게이션바의 form태그를 사용하여 검색창 생성 -->
