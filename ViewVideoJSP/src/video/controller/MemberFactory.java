@@ -1,6 +1,6 @@
 package video.controller;
 
-import video.factory.*;
+import video.memberIf.*;
 
 
 public class MemberFactory {
@@ -12,7 +12,7 @@ public class MemberFactory {
 		return instance;
 	}
 	
-	public MemberIf createCommand(String cmd) {
+	public VideoIf createCommand(String cmd) {
 		if(cmd.equals("/login.member")) return new LoginMemberIf();
 		else if(cmd.equals("/logout.member")) return new LogoutMemberIf();
 		else if(cmd.equals("/join.member")) return new JoinMemberIf();

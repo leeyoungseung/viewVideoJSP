@@ -1,9 +1,9 @@
-package video.factory;
+package video.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public interface MemberIf {
+public interface VideoIf {
 	 public Object processCommand
 	 (HttpServletRequest request, HttpServletResponse response);
 }

@@ -1,12 +1,13 @@
-package video.factory;
+package video.memberIf;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import video.controller.VideoIf;
 import video.dto.MemberDTO;
 
-public class LogoutMemberIf implements MemberIf {
+public class LogoutMemberIf implements VideoIf {
 
 	@Override
 	public Object processCommand(HttpServletRequest request, HttpServletResponse response) {
