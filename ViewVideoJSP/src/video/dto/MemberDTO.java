@@ -5,6 +5,8 @@ public class MemberDTO {
 	private String memId;
 	private String memPw;
 	private String memName;
+	private String memEmail;
+	
 	public Integer getMemNo() {
 		return memNo;
 	}
@@ -29,9 +31,17 @@ public class MemberDTO {
 	public void setMemName(String memName) {
 		this.memName = memName;
 	}
+	public String getMemEmail() {
+		return memEmail;
+	}
+	public void setMemEmail(String memEmail) {
+		this.memEmail = memEmail;
+	}
 	@Override
 	public String toString() {
-		return "MemberDTO [memNo=" + memNo + ", memId=" + memId + ", memPw=" + memPw + ", memName=" + memName + "]";
+		return "MemberDTO [memNo=" + memNo + ", memId=" + memId + ", memPw=" + memPw + ", memName=" + memName
+				+ ", memEmail=" + memEmail + "]";
 	}
+	
 	
 }

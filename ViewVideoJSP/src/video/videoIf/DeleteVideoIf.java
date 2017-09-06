@@ -23,7 +23,7 @@ public class DeleteVideoIf implements VideoIf {
 			request.setAttribute("msg", msg);
 		}catch (Exception e) {
 			e.printStackTrace();
-			nextPage="index.jsp";
+			nextPage="myPage.member?memNo="+dto.getMemNo();
 		}
 		return nextPage;
 	}

@@ -29,16 +29,16 @@ public class LoginMemberIf implements VideoIf {
 				request.setAttribute("msg", hm.get("result"));
 				dto =(MemberDTO)hm.get("user");
 				System.out.println(1 + dto.toString());
-				nextPage = "myPage.jsp";
+				nextPage = "myPage.member?memNo="+dto.getMemNo();
 				break;
 			case 2:
 				request.setAttribute("msg", hm.get("result"));
-				nextPage = "index.jsp";
+				nextPage = "login.jsp";
 				System.out.println(2 + dto.toString());
 				break;
 			case 3:
 				request.setAttribute("msg", hm.get("result"));
-				nextPage = "index.jsp";
+				nextPage = "login.jsp";
 				System.out.println(3 + dto.toString());
 				break;
 			}

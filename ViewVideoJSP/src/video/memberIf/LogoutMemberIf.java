@@ -15,20 +15,15 @@ public class LogoutMemberIf implements VideoIf {
 		String nextPage = null;
 		HttpSession session = request.getSession();
 		try {
-			MemberDTO dto = (MemberDTO) session.getAttribute("user");
-			System.out.println(dto.toString());
+			/*MemberDTO dto = (MemberDTO) session.getAttribute("user");
+			System.out.println(dto.toString());*/
+			session.removeAttribute("user");
 			session.invalidate();
-			MemberDTO dto2 = (MemberDTO) session.getAttribute("user");
-			if(dto2==null) {
-				System.out.println("LogoutMemberIf : "+1);
-				nextPage = "index.jsp";
-			}else {
-				System.out.println("LogoutMemberIf : "+2);
-				session.removeAttribute("user");
-				nextPage = "index.jsp";
-			}
+			nextPage = "login.jsp";
+			
 		} catch (Exception e) {
 			// TODO: handle exception
+			System.out.println("logout error");
 		}
 		return nextPage;
 	}

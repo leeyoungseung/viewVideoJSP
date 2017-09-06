@@ -39,11 +39,15 @@ public class VideoDAO {
 			dto.setVidNo(rs.getInt("vidNo"));
 			dto.setMemNo(rs.getInt("memNo"));
 			dto.setVidAddr(rs.getString("vidAddr"));
-			//dto.setVidDate(rs.getDate("vidDate"));
+			dto.setVidDate(rs.getDate("vidDate"));
+			dto.setVidLike(rs.getInt("vidLike"));
+			dto.setVidSub(rs.getString("vidSub"));
+			dto.setVidContent(rs.getString("vidContent"));
 			listMember.add(dto);
 		}
 		return listMember;
 	}
+	//個人list
 	public List<VideoDTO> list(Integer memNo) throws Exception{
 		System.out.println("video list");
 		String sql = "select * from video where memNo="+memNo;
@@ -68,11 +72,36 @@ public class VideoDAO {
 			if (con != null) con.close();
 		}
 	}
+	
+	public List<VideoDTO> listAll() throws Exception{
+		System.out.println("video list");
+		String sql = "select * from video";
+		List<VideoDTO> allList = null;
+		try{
+			System.out.println(1);
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			allList = makeList(rs);
+			System.out.println(2);
+			for(VideoDTO dto :allList) {
+				System.out.println(dto.getVidAddr());
+			}
+			return allList;
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("erorr");
+			return allList;
+		}finally{
+			if (rs != null) rs.close();
+			if (ps != null) ps.close();
+			if (con != null) con.close();
+		}
+	}
 	//挿入
 	public String createOne(VideoDTO dto) throws Exception{
 		String result="register error";
-		String sql = "insert into video ( memNo, vidAddr, vidDate) values ("
-				+ "'"+dto.getMemNo()+"', '"+dto.getVidAddr()+"', sysdate())";
+		String sql = "insert into video ( memNo, vidAddr, vidDate, vidLike, vidSub, vidContent) values ("
+				+ "'"+dto.getMemNo()+"', '"+dto.getVidAddr()+"', sysdate(), 0 , '"+dto.getVidSub()+"','"+dto.getVidContent()+"')";
 		try{
 			ps = con.prepareStatement(sql);
 			int res = ps.executeUpdate();
@@ -88,6 +117,7 @@ public class VideoDAO {
 			if (con != null) con.close();	
 		}
 	}
+	
 	//詳細ページ
 	public VideoDTO getOne(Integer dto) throws Exception{
 		String sql = "select * from video where vidNo='"+dto+"'";
@@ -96,6 +126,22 @@ public class VideoDAO {
 			rs = ps.executeQuery();
 			VideoDTO getDTO = makeList(rs).get(0);
 			return getDTO;
+		}finally {
+			if (rs != null) rs.close();
+			if (ps != null) ps.close();
+			if (con != null) con.close();
+		}
+	}
+	//修正
+	public String update(VideoDTO dto) throws Exception{
+		String sql = "update video set vidAddr='"+dto.getVidAddr()+"', vidSub='"+dto.getVidSub()+"','"+dto.getVidContent()+" where vidNo='"+dto.getVidNo()+"'";	
+		String result=null;
+		try{
+			ps = con.prepareStatement(sql);
+			int res = ps.executeUpdate();
+			if(res<1) result = "update error";
+			else result = dto.getVidSub()+" の情報が修正されました。";
+			return result;
 		}finally {
 			if (rs != null) rs.close();
 			if (ps != null) ps.close();

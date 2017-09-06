@@ -18,13 +18,12 @@ public class ListVideoIf implements VideoIf {
 		VideoDTO dto = new VideoDTO();
 		String nextPage=null;
 		try {
-			int memNo = Integer.parseInt(request.getParameter("memNo"));
-			List<VideoDTO>myVList = dao.list(memNo);
-			request.setAttribute("vList", myVList);
-			nextPage="videoList.jsp";
+			List<VideoDTO>allList = dao.listAll();
+			request.setAttribute("allList", allList);
+			nextPage="/video/listAll.jsp";
 		}catch (Exception e) {
 			e.printStackTrace();
-			nextPage="index.jsp";
+			nextPage="myPage.member?memNo="+dto.getMemNo();;
 		}
 		return nextPage;
 	}

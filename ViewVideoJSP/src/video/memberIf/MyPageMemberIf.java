@@ -2,28 +2,28 @@ package video.memberIf;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import video.controller.VideoIf;
 import video.dto.MemberDTO;
+import video.dto.VideoDTO;
 import video.module.MemberDAO;
+import video.module.VideoDAO;
 
-public class DeleteMemberIf implements VideoIf {
+public class MyPageMemberIf implements VideoIf {
 
 	@Override
 	public Object processCommand(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		MemberDAO dao = new MemberDAO();
-		MemberDTO dto = new MemberDTO();
-		String nextPage = null;
+		MemberDTO mdto = new MemberDTO();
+		VideoDAO vdao = new VideoDAO();
+		String nextPage="login.jsp";
 		try {
-			dto.setMemNo(Integer.parseInt(request.getParameter("memNo")));
-			request.setAttribute("msg", dao.delete(dto)); 
-			nextPage = "login.jsp";
+			Integer memNo = Integer.parseInt(request.getParameter("memNo"));
+			request.setAttribute("vlist", vdao.list(memNo));
+			nextPage="myPage.jsp";
 		}catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
-		
 		return nextPage;
 	}
 

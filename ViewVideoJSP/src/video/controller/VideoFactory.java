@@ -19,7 +19,7 @@ public class VideoFactory {
 		if(cmd.equals("/list.video")) return new ListVideoIf();
 		else if(cmd.equals("/read.video")) return new ReadVideoIf();
 		else if(cmd.equals("/join.video")) return new JoinVideoIf();
-		else if(cmd.equals("/delete.member")) return new DeleteVideoIf();
+		else if(cmd.equals("/delete.video")) return new DeleteVideoIf();
 		return null;
 	}
 }

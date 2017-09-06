@@ -31,11 +31,14 @@ public class JoinVideoIf implements VideoIf {
 		try {
 			dto.setMemNo(Integer.parseInt(request.getParameter("memNo")));
 			dto.setVidAddr(makeAddr(request.getParameter("vidAddr")));
+			dto.setVidSub(request.getParameter("vidSub"));
+			dto.setVidContent(request.getParameter("vidContent"));
 			msg = dao.createOne(dto);
-			nextPage= "list.video?memNo="+dto.getMemNo();
+			request.setAttribute("msg", msg);
+			nextPage="myPage.member?memNo="+dto.getMemNo();
 		}catch (Exception e) {
 			e.printStackTrace();
-			nextPage="index.jsp";
+			nextPage="myPage.member?memNo="+dto.getMemNo();
 		}
 		return nextPage;
 	}

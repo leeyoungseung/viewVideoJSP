@@ -39,6 +39,7 @@ public class MemberDAO {
 			dto.setMemId(rs.getString("memId"));
 			dto.setMemPw(rs.getString("memPw"));
 			dto.setMemName(rs.getString("memName"));
+			dto.setMemEmail(rs.getString("memEmail"));
 			listMember.add(dto);
 		}
 		return listMember;
@@ -117,8 +118,8 @@ public class MemberDAO {
 		if(dto.getMemId().equals(confirmOnlyId(dto.getMemId()))) {
 			return result="もう存在するIDです。";
 		}
-		String sql = "insert into member ( memId, memPw,memName) values ("
-				+ "'"+dto.getMemId()+"', '"+dto.getMemPw()+"' , '"+dto.getMemName()+"')";
+		String sql = "insert into member ( memId, memPw, memName, memEmail) values ("
+				+ "'"+dto.getMemId()+"', '"+dto.getMemPw()+"' , '"+dto.getMemName()+"' , '"+dto.getMemEmail()+"')";
 		try{
 			ps = con.prepareStatement(sql);
 			int res = ps.executeUpdate();
@@ -149,20 +150,39 @@ public class MemberDAO {
 			if (con != null) con.close();
 		}
 	}
-	
-	//削除
-		public String delete(MemberDTO dto) throws Exception{
-			String sql = "delete from member where memNo='"+dto.getMemNo()+"'";
-			String result = null;
-			try{
-				ps = con.prepareStatement(sql);
-				int res = ps.executeUpdate();
-				if(res<1) result = "delete error";
-				else result = dto.getMemName()+" 様がの文が削除されました。";
-				return result;
-			}finally {
-				if (ps != null) ps.close();
-				if (con != null) con.close();
-			}
+	//修正
+	public HashMap update(MemberDTO dto) throws Exception{
+		String sql = "update member set memPw='"+dto.getMemPw()+"', memEmail='"+dto.getMemEmail()+"' where memNo='"+dto.getMemNo()+"'";	
+		String result=null;
+		HashMap hm= new HashMap<>();
+		try{
+			ps = con.prepareStatement(sql);
+			int res = ps.executeUpdate();
+			if(res<1) result = "update error";
+			else result = dto.getMemName()+" 様の情報が修正されました。";
+			hm.put("msg", result);
+			hm.put("newUser", getOne(dto));
+			return hm;
+		}finally {
+			if (rs != null) rs.close();
+			if (ps != null) ps.close();
+			if (con != null) con.close();
 		}
+	}
+	//削除
+	public String delete(MemberDTO dto) throws Exception{
+		String sql = "delete from member where memNo='"+dto.getMemNo()+"'";
+		String result = null;
+		try{
+			ps = con.prepareStatement(sql);
+			int res = ps.executeUpdate();
+			if(res<1) result = "delete error";
+			else result = dto.getMemName()+" 様がの文が削除されました。";
+			return result;
+		}finally {
+			if (ps != null) ps.close();
+			if (con != null) con.close();
+		}
+	}
+	
 }

@@ -18,6 +18,8 @@ public class MemberFactory {
 		else if(cmd.equals("/join.member")) return new JoinMemberIf();
 		else if(cmd.equals("/delete.member")) return new DeleteMemberIf();
 		else if(cmd.equals("/read.member")) return new ReadMemberIf();
+		else if(cmd.equals("/update.member")) return new UpdateMemberIf();
+		else if(cmd.equals("/myPage.member")) return new MyPageMemberIf();
 		return null;
 	}
 }

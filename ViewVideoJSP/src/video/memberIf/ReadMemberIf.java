@@ -14,15 +14,16 @@ public class ReadMemberIf implements VideoIf {
 		// TODO Auto-generated method stub
 		MemberDAO dao = new MemberDAO();
 		MemberDTO dto = new MemberDTO();
-		String nextPage = null;
+		String nextPage = "login";
 		try {
 			dto.setMemNo(Integer.parseInt(request.getParameter("memNo")));
-			
+			dto = dao.getOne(dto);
+			request.setAttribute("myInfo", dto);
+			nextPage = "myPage.jsp";
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		
 		return nextPage;
 	}
 
