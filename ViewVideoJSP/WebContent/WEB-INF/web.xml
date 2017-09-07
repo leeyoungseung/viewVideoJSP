@@ -16,4 +16,12 @@
     <servlet-name>video</servlet-name>
     <url-pattern>*.video</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>reply</servlet-name>
+    <servlet-class>video.controller.ReplyController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>reply</servlet-name>
+    <url-pattern>*.reply</url-pattern>
+  </servlet-mapping>
 </web-app>

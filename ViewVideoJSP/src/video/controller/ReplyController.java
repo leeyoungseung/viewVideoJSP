@@ -9,21 +9,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class ReplyController
- */
 @WebServlet("/ReplyController")
 public class ReplyController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		doService(request,response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		doService(request, response);
 	}
 	protected void doService(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
@@ -37,9 +34,8 @@ public class ReplyController extends HttpServlet {
 		String nextPage=null;  
 		ReplyFactory factory = ReplyFactory.getInstance();
 		VideoIf reply = factory.createCommand(cmd);
-		nextPage=(String)reply.processCommand(request, response);
-		RequestDispatcher view = request.getRequestDispatcher(nextPage);
-		view.forward(request, response);
+		reply.processCommand(request, response);
+		
 	}
 
 }

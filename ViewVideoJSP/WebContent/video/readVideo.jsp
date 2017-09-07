@@ -7,11 +7,96 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width" ,initial-scale="1">
 	<title>E-learning</title>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css"><!-- 외부적으로 만들어진 css파일의 디자인을 사용하겠다고 선언하는 코드  -->
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/codingBooster.css">
-	<link rel='stylesheet prefetch' type="text/css"  href="../bootstrap/css/myPage.css">
+	<link rel='stylesheet prefetch' type="text/css"  href="bootstrap/css/myPage.css">
+<script type="text/javascript">
+	$(function(){
+		loadReplyList();
+		
+		$("#btnjoin").click(function(){
+		 var memNo = $("#reMemNo").val();
+		 var vidNo = $("#reVidNo").val();
+		 var writer = $("#reWriter").val();
+		 var content = $("#reContent").val();
+		 $.ajax({
+			type: "post",
+			url: "./join.reply",
+			data: {
+				memNo: memNo,
+				vidNo: vidNo,
+				writer: writer,
+				content: content
+			},
+			success: function(result){
+				if(result==1){
+					autoClosingAlert('#successMessage', 2000);
+					$("#replyList").empty();
+					loadReplyList();
+				}else if(result==0){
+					autoClosingAlert('#dangerMessage', 2000);
+				}else{
+					autoClosingAlert('#warningMessage', 2000);
+				}
+				$("#reContent").val('');
+			}
+		 });	 
+	});
+		
+	function autoClosingAlert(selector, delay){//메시지 등록 함수의 결과를 표시해주는 함수
+		var alert = $(selector).alert();
+		alert.show();
+		window.setTimeout(function(){alert.hide()}, delay);
+	}
+	//replyを自動的に表示する
+	function loadReplyList(){
+	
+		var vidNo=$("#reVidNo").val();
+		$.ajax({
+			type: "post",
+			url: "./list.reply",
+			data:{
+				vidNo: vidNo
+			},
+			success: function(data){
+				if(data == "") return;
+				var parsed = JSON.parse(data);
+				var result = parsed.result;
+				for(var i=0; i<result.length; i++){
+					addRe(result[i][0].value, result[i][1].value, result[i][2].value, result[i][3].value);
+				}
+			}
+		});
+
+	}
+	
+	function addRe(reNo, writer, content, reDate){
+		$("#replyList").append(
+				'<div class="row">'+
+				'<div>'+reNo+'</div>'+
+				'<div>'+writer+'</div>'+
+				'<div>'+content+'</div>'+
+				'<div>'+reDate+'</div>'+
+				'</div>'
+		);
+	}
+});
+</script>
 </head>
 	<body>
+	<style>
+		body {
+  	background-color: #222;
+  	color: #ccc;
+		}
+	.nopadding {
+ 	 padding: 2px !important;
+ 	 margin: 0 !important;
+ 	 outline: 2px solid #333;
+ 	 background: #333;
+	}
+	</style>
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -43,7 +128,6 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
 							aria-haspopup="true" aria-expanded="false">LOGIN & LOGOUT<span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="loginForm.html">Login</a></li>
 							<li><a href="logout.member">Logout</a></li>
 						</ul>
 					</li>
@@ -71,17 +155,51 @@
 						<textarea readonly="readonly" class="form-control" rows="5" id="commentContent" name="vidContent">${dto.getVidContent() }</textarea>
 						<br>
 						<div class="btn-group btn-group-default" role="group" >
-              			<button type="button" class="btn btn-default" role="button" onclick="location.href='list.video'">戻る</button>
+              				<button type="button" class="btn btn-default" role="button" onclick="location.href='list.video'">戻る</button>
               			<c:if test="${dto.getMemNo() == user.getMemNo() }">
-              			<button type="button" class="btn btn-default" role="button" onclick="location.href='delete.video?memNo=${user.getMemNo()}&vidNo=${dto.getVidNo() }'">削除</button>
+              				<button type="button" class="btn btn-default" role="button" onclick="location.href='delete.video?memNo=${user.getMemNo()}&vidNo=${dto.getVidNo() }'">削除</button>
+              			</c:if>
+              			</div>
+				</div>
+			<hr>
+	</div>
+  	<div class="container">
+			<hr>
+				<div class="form-group">
+						<input type="hidden" name="memNo" id="reMemNo" value="${user.getMemNo() }">
+						<input type="hidden" name="vidNo" id="reVidNo" value="${dto.getVidNo() }">
+						
+						<label> <h3>Reply登録</h3> </label>
+						<input id="reWriter" name="writer" type="text" value="${user.getMemName() }">
+						<br>
+						<textarea class="form-control" rows="5" id="reContent" name="content"></textarea>
+						<br>
+						<div class="btn-group btn-group-default" role="group" >
+              			<button type="button" id="btnjoin" class="btn btn-default" role="button" >登録</button>
+              			<c:if test="${dto.getMemNo() == user.getMemNo() }">
+              			<button type="button" class="btn btn-default" role="button" onclick="">削除</button>
               			</c:if>
               			</div>
               			<div class="btn-group btn-group-default" role="group" >
-              			<button type="button" class="btn btn-default" role="button">Replyを見る</button>
+              			<button type="button" class="btn btn-default" role="button" id="seeReply">Replyを見る</button>
 						</div>
 				</div>
 			<hr>
-	</div>	
+			<div id="replyList">
+	
+			</div>
+	</div>
+	
+	<div class="alert alert-success" id="successMessage" style="display: none;">
+			<strong>메시지 전송에 성공하였습니다</strong>
+		</div>
+		<div class="alert alert-danger" id="dangerMessage" style="display: none;">
+			<strong>이름과 내용을 모두 입력해주세요</strong>
+		</div>
+		<div class="alert alert-warning" id="warningMessage" style="display: none;">
+			<strong>데이터베이스 오류가 발생했습니다</strong>
+		</div>
+	
 	<footer style="background-color: #000000; color: #ffffff">
 		<div class="container">
 			<br>
@@ -106,7 +224,6 @@
 			</div>
 		</div>
 	</footer>
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="bootstrap/js/bootstrap.js"></script>
 	</body>
 </html>

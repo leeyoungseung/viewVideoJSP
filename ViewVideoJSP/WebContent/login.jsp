@@ -9,11 +9,81 @@
 	<title>E-learning</title>
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css"><!-- 외부적으로 만들어진 css파일의 디자인을 사용하겠다고 선언하는 코드  -->
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/codingBooster.css">
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript">
+$(document).ready(function(){
+ $("#sendLogin").click(function(){
+  var rmemId = $("#rmemId").val();
+  rmemId = $.trim(rmemId);
+  if(rmemId==""){
+   alert("IDの値がありません。");
+   return;
+  }
+  var rmemPw = $("#rmemPw").val();
+  rmemPw = $.trim(rmemPw);
+  if(rmemPw==""){
+   alert("パスワードを入力してください");
+   return;
+  }
+  $("#login-form").attr("action", "login.member").submit();
+ });
+ 
+ 
+ $("#sendJoin").click(function(){
+	  var jmemId = $("#jmemId").val();
+	  jmemId = $.trim(jmemId);
+	  if(jmemId==""){
+	   alert("IDを入力してください");
+	   return;
+	  }
+	  var jmemPw = $("#jmemPw").val();
+	  jmemPw = $.trim(jmemPw);
+	  if(jmemPw==""){
+	   alert("パスワードを入力してください");
+	   return;
+	  }
+	  var jmemName = $("#jmemName").val();
+	  jmemName = $.trim(jmemName);
+	  if(jmemName==""){
+	   alert("氏名を入力してください");
+	   return;
+	  }
+	  var jmemEmail = $("#jmemEmail").val();
+	  jmemEmail = $.trim(jmemEmail);
+	  if(jmemEmail==""){
+	   alert("メールアドレスを入力してください");
+	   return;
+	  }
+	  var i = jmemEmail.indexOf("@");
+	  if(i<0){
+	   alert("メールアドレスの形式を守ってください");
+	   return;
+	  }
+	  i = jmemEmail.indexOf(".");
+	  if(i<0){
+	   alert("이メールアドレスの形式を守ってください");
+	   return;
+	  }
+	  $("#register-form").attr("action", "join.member").submit();
+	 });
+});
+</script>
 </head>
 	<body>
+	<c:if test="${not empty msg }">
+		<input type="hidden" value="${msg }" id="msg" name="msg">
+		<script type="text/javascript">
+		var msg=$("#msg").val();
+		alert(msg);
+		<% request.removeAttribute("msg");%>
+		</script>
+	</c:if>
+	
 	<style type="text/css">
 						body {
 			    padding-top: 90px;
+			    background-color: #222;
+  				color: #ccc;
 			}
 			.panel-login {
 				border-color: #ccc;
@@ -151,10 +221,10 @@
 							<div class="col-lg-12">
 								<form id="login-form" action="login.member" method="post" role="form" style="display: block;">
 									<div class="form-group">
-										<input type="text" name="memId" id="memId" tabindex="1" class="form-control" placeholder="ID" value="">
+										<input type="text" name="memId" id="rmemId" tabindex="1" class="form-control" placeholder="ID" value="">
 									</div>
 									<div class="form-group">
-										<input type="password" name="memPw" id="memPw" tabindex="2" class="form-control" placeholder="PW">
+										<input type="password" name="memPw" id="rmemPw" tabindex="2" class="form-control" placeholder="PW">
 									</div>
 									<div class="form-group text-center">
 										<input type="checkbox" tabindex="3" class="" name="remember" id="remember">
@@ -163,7 +233,7 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">
-												<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
+												<input type="button" name="login-submit" id="sendLogin" tabindex="4" class="form-control btn btn-login" value="Log In">
 											</div>
 										</div>
 									</div>
@@ -180,21 +250,21 @@
 								<!-- ここからJOIN-->
 								<form id="register-form" action="join.member" method="post" role="form" style="display: none;">
 									<div class="form-group">
-										<input type="text" name="memId" id="memId" tabindex="1" class="form-control" placeholder="ID" value="">
+										<input type="text" name="memId" id="jmemId" tabindex="1" class="form-control" placeholder="ID" value="">
 									</div>
 									<div class="form-group">
-										<input type="password" name="memPw" id="memPw" tabindex="1" class="form-control" placeholder="PWD" value="">
+										<input type="password" name="memPw" id="jmemPw" tabindex="1" class="form-control" placeholder="PWD" value="">
 									</div>
 									<div class="form-group">
-										<input type="text" name="memName" id="memName" tabindex="2" class="form-control" placeholder="氏名">
+										<input type="text" name="memName" id="jmemName" tabindex="2" class="form-control" placeholder="氏名">
 									</div>
 									<div class="form-group">
-										<input type="email" name="memEmail" id="memEmail" tabindex="1" class="form-control" placeholder="メール アドレス" value="">
+										<input type="email" name="memEmail" id="jmemEmail" tabindex="1" class="form-control" placeholder="メール アドレス" value="">
 									</div>
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">
-												<input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="会員登録する">
+												<input type="button" name="register-submit" id="sendJoin" tabindex="4" class="form-control btn btn-register" value="会員登録する">
 											</div>
 										</div>
 									</div>
@@ -230,7 +300,7 @@
 			</div>
 		</div>
 	</footer>
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	
 	<script src="bootstrap/js/bootstrap.js"></script>
 	</body>
 	<script type="text/javascript">

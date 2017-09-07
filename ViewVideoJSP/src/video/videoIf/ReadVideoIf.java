@@ -18,6 +18,7 @@ public class ReadVideoIf implements VideoIf {
 		try {
 			int vidNo = Integer.parseInt(request.getParameter("vidNo"));
 			dto = dao.getOne(vidNo);
+			System.out.println("ReadVideoIf :"+dto.toString());
 			request.setAttribute("dto", dto);
 			nextPage="/video/readVideo.jsp";
 		}catch (Exception e) {

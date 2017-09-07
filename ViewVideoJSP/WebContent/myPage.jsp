@@ -12,6 +12,20 @@
 	<link rel='stylesheet prefetch' type="text/css" href="bootstrap/css/myPage.css">
 </head>
 	<body>
+	<style>
+		body {
+  	background-color: #222;
+  	color: #ccc;
+		}
+	/* remove defaults from responsive cols */
+
+	.nopadding {
+ 	 padding: 2px !important;
+ 	 margin: 0 !important;
+ 	 outline: 2px solid #333;
+ 	 background: #333;
+	}
+	</style>
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">

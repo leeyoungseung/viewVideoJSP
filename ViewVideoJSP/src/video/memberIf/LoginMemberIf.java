@@ -26,6 +26,7 @@ public class LoginMemberIf implements VideoIf {
 			case 1:
 				HttpSession session = request.getSession();
 				session.setAttribute("user", hm.get("user"));
+				System.out.println(hm.get("result"));
 				request.setAttribute("msg", hm.get("result"));
 				dto =(MemberDTO)hm.get("user");
 				System.out.println(1 + dto.toString());
@@ -35,11 +36,13 @@ public class LoginMemberIf implements VideoIf {
 				request.setAttribute("msg", hm.get("result"));
 				nextPage = "login.jsp";
 				System.out.println(2 + dto.toString());
+				System.out.println(hm.get("result"));
 				break;
 			case 3:
 				request.setAttribute("msg", hm.get("result"));
 				nextPage = "login.jsp";
 				System.out.println(3 + dto.toString());
+				System.out.println(hm.get("result"));
 				break;
 			}
 		}catch (Exception e) {
