@@ -10,6 +10,58 @@
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css"><!-- 외부적으로 만들어진 css파일의 디자인을 사용하겠다고 선언하는 코드  -->
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/codingBooster.css">
 	<link rel='stylesheet prefetch' type="text/css" href="bootstrap/css/myPage.css">
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$("#updateMember").click(function(){
+			  var upEmail = $("#upEmail").val();
+			  upEmail = $.trim(upEmail);
+			  if(upEmail==""){
+			   alert("メールアドレスを入力してください");
+			   return;
+			  }
+			  var i = upEmail.indexOf("@");
+			  if(i<0){
+			   alert("メールアドレスの形式を守ってください");
+			   return;
+			  }
+			  i = upEmail.indexOf(".");
+			  if(i<0){
+			   alert("メールアドレスの形式を守ってください");
+			   return;
+			  }
+			  var upPwd = $("#upPwd").val();
+				upPwd = $.trim(upPwd);
+				  if(upPwd==""){
+				   alert("パスワードを入力してください");
+				   return;
+				  }
+			  $("#upForm").attr("action", "update.member").submit();
+		});
+		
+		$("#joinVideo").click(function(){
+			  var vidAddr = $("#vidAddr").val();
+			  vidAddr = $.trim(vidAddr);
+			  if(vidAddr==""){
+			   alert("動画のアドレスを入力してください。");
+			   return;
+			  }
+			  var vidSub = $("#vidSub").val();
+			  vidSub = $.trim(vidSub);
+			  if(vidSub==""){
+			   alert("動画名を入力してください");
+			   return;
+			  }
+			  var vidContent = $("#vidContent").val();
+			  vidContent = $.trim(vidContent);
+			  if(vidContent==""){
+			   alert("動画の説明を入力してください");
+			   return;
+			  }
+			  $("#joinVidForm").attr("action", "join.video").submit();
+			});	
+	});
+	</script>
 </head>
 	<body>
 	<style>
@@ -136,18 +188,18 @@
 		</div>
 		<div class="modal-body">
             <!-- content goes here -->
-			<form action="update.member">
+			<form action="update.member" id="upForm">
 			<input type="hidden" value="${user.getMemNo() }" name="memNo">
               <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
-                <input name="memEmail" value="${user.getMemEmail() }" type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                <input name="memEmail" value="${user.getMemEmail() }" type="email" class="form-control" id="upEmail" placeholder="Enter email">
               </div>
               <div class="form-group">
                 <label for="exampleInputPassword1">Password</label>
-                <input name="memPw" value="${user.getMemPw() }" type="text" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                <input name="memPw" value="${user.getMemPw() }" type="text" class="form-control" id="upPwd" placeholder="Password">
               </div>
               <div class="btn-group btn-group-default" role="group" aria-label="group button">
-              <input type="submit" class="btn btn-default" value="Submit">
+              <input type="button" class="btn btn-default" id="updateMember" value="Submit">
               <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
               </div>
               </div>
@@ -165,7 +217,7 @@
 		</div>
 		<div class="modal-body">
             <!-- content goes here -->
-			<form action="join.video">
+			<form action="join.video" id="joinVidForm">
 			<input type="hidden" value="${user.getMemNo() }" name="memNo">
               <div class="form-group">
                 <label for="exampleInputEmail1">動画の住所</label>
@@ -180,7 +232,7 @@
                 <textarea class="form-control" rows="5" cols="4" id="vidContent" name="vidContent"></textarea>
               </div>
               <div class="btn-group btn-group-default" role="group" aria-label="group button">
-              <input type="submit" class="btn btn-default" value="Submit">
+              <input type="button" class="btn btn-default" id="joinVideo" value="Submit">
               <button type="button" class="btn btn-default" data-dismiss="modal" role="button">Close</button>
               </div>
               </div>
@@ -212,7 +264,7 @@
 			</div>
 		</div>
 	</footer>
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	
 	<script src="bootstrap/js/bootstrap.js"></script>
 	</body>
 </html>

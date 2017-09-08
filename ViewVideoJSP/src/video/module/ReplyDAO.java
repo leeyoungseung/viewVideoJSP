@@ -23,7 +23,8 @@ public class ReplyDAO {
 		 // MySQL用ドライバ呼び出し
 		 Class.forName("com.mysql.jdbc.Driver").newInstance();
 		 // データベース接続
-		 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql?useUnicode=true&characterEncoding=utf8","root","");
+		 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql?useUnicode=true&characterEncoding=utf8","root","1234");
+		 //con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql?useUnicode=true&characterEncoding=utf8","root","");
 		 System.out.println("MySQLに接続。");
 		} catch (SQLException e) {
 		 System.out.println("MySQLに接続できませんでした。");
@@ -67,7 +68,7 @@ public class ReplyDAO {
 		 }
 		 return chatList;
 	 }
-	//채팅 목록 불러오기
+	//コメントLIST
 	public List<ReplyDTO> getChatList(String nowTime, ReplyDTO dto){
 		System.out.println("nowTime : "+nowTime);
 		System.out.println(dto.toString());

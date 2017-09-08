@@ -8,7 +8,7 @@
 	<meta name="viewport" content="width=device-width" ,initial-scale="1">
 	<title>E-learning</title>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css"><!-- 외부적으로 만들어진 css파일의 디자인을 사용하겠다고 선언하는 코드  -->
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/codingBooster.css">
 	<link rel='stylesheet prefetch' type="text/css"  href="bootstrap/css/myPage.css">
 <script type="text/javascript">
@@ -20,6 +20,10 @@
 		 var vidNo = $("#reVidNo").val();
 		 var writer = $("#reWriter").val();
 		 var content = $("#reContent").val();
+		 if(content==""){
+			 alert("コメントの内容を入力してください");
+			 return;
+		 }
 		 $.ajax({
 			type: "post",
 			url: "./join.reply",
@@ -78,7 +82,8 @@
 				'<div>'+writer+'</div>'+
 				'<div>'+content+'</div>'+
 				'<div>'+reDate+'</div>'+
-				'</div>'
+				'</div>'+
+				'<hr>'
 		);
 	}
 });
@@ -176,13 +181,13 @@
 						<br>
 						<div class="btn-group btn-group-default" role="group" >
               			<button type="button" id="btnjoin" class="btn btn-default" role="button" >登録</button>
-              			<c:if test="${dto.getMemNo() == user.getMemNo() }">
+              			<%-- <c:if test="${dto.getMemNo() == user.getMemNo() }">
               			<button type="button" class="btn btn-default" role="button" onclick="">削除</button>
-              			</c:if>
+              			</c:if> --%>
               			</div>
-              			<div class="btn-group btn-group-default" role="group" >
+              			<!-- <div class="btn-group btn-group-default" role="group" >
               			<button type="button" class="btn btn-default" role="button" id="seeReply">Replyを見る</button>
-						</div>
+						</div> -->
 				</div>
 			<hr>
 			<div id="replyList">
@@ -191,13 +196,13 @@
 	</div>
 	
 	<div class="alert alert-success" id="successMessage" style="display: none;">
-			<strong>메시지 전송에 성공하였습니다</strong>
+			<strong>コメントが登録されました</strong>
 		</div>
 		<div class="alert alert-danger" id="dangerMessage" style="display: none;">
-			<strong>이름과 내용을 모두 입력해주세요</strong>
+			<strong>内容を入力してください</strong>
 		</div>
 		<div class="alert alert-warning" id="warningMessage" style="display: none;">
-			<strong>데이터베이스 오류가 발생했습니다</strong>
+			<strong>データベースエラー</strong>
 		</div>
 	
 	<footer style="background-color: #000000; color: #ffffff">
